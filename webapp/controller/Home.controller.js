@@ -245,7 +245,7 @@ sap.ui.define([
                 that.oLoc.setValue();
                 that.oProd.removeAllTokens();
                 // that.oProd.setEnabled(false);
-                that.byId("idBtnSubmit").setEnabled(false);
+                // that.byId("idBtnSubmit").setEnabled(false);
                 that.oCharModel1.setData({ setChars: [] });
                 that.byId("idChars").setModel(that.oCharModel1);
                 that.byId("headtabSearch").setValue();
@@ -295,7 +295,7 @@ sap.ui.define([
                                         }
                                     }
                                 }
-                            }                            
+                            }
                             sap.ui.core.BusyIndicator.hide();
                         },
                         error: function (oData, error) {
@@ -339,7 +339,7 @@ sap.ui.define([
                 }
             },
             onCharSavePress: function () {
-                sap.ui.core.BusyIndicator.show();                
+                sap.ui.core.BusyIndicator.show();
                 that.byId("headtabSearch").setValue();
                 that.byId("idChars").getBinding("items").filter([]);
                 var charItems = {}, charArray = [];
@@ -384,6 +384,23 @@ sap.ui.define([
                         MessageToast.show("error");
                     },
                 });
+            },
+            onNavPress: function () {
+                if (sap.ushell && sap.ushell.Container && sap.ushell.Container.getService) {
+                    jQuery.sap.storage(jQuery.sap.storage.Type.local).put("data", 0);
+                    var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+                    // generate the Hash to display
+                    var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                        target: {
+                            semanticObject: "VCPDocument",
+                            action: "Display"
+                        }
+                    })) || "";
+                    //Generate a  URL for the second application
+                    var url = window.location.href.split('#')[0] + hash;
+                    // //Navigate to second app
+                    sap.m.URLHelper.redirect(url, true);
+                }
             }
         });
     });
