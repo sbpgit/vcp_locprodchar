@@ -62,20 +62,20 @@ sap.ui.define([
                 that.oLoc = this.byId("PDFlocInput");
                 that.oProd = this.byId("PDFprodInput");
 
-                this.getOwnerComponent().getModel("BModel").callFunction("/getProductCharVal", {
-                    method: "GET",
-                    urlParameters: {
-                        Flag: "Z",
-                        PRODATA: JSON.stringify([])
-                    },
-                    // this.getOwnerComponent().getModel("BModel").read("/getProdClsCharMaster", {
+                // this.getOwnerComponent().getModel("BModel").callFunction("/getProductCharVal", {
+                //     method: "GET",
+                //     urlParameters: {
+                //         Flag: "Z",
+                //         PRODATA: JSON.stringify([])
+                //     },
+                    this.getOwnerComponent().getModel("BModel").read("/getProdClsCharMaster", {
                     success: function (oData) {
                         that.allCharacterstics = [];
                         for (let i = 0; i < oData.results.length; i++) {
                             that.loadArray.push(oData.results[i]);
                         }
                         let aDistinct = that.removeDuplicate(that.loadArray, 'CHAR_NAME');
-                        that.allCharacterstics = aDistinct;
+                        that.allCharacterstics = that.loadArray;
                     },
                     error: function () {
                         MessageToast.show("Failed to get profiles");
@@ -264,7 +264,9 @@ sap.ui.define([
                     that.byId("idCharSaveBtn").setEnabled(true);
                     var selectedProd = that.byId("PDFprodInput").getTokens()[0].getText();
                     var selectedLoc = that.byId("PDFlocInput").getValue();
-                    that.oCharModel1.setData({ setChars: that.allCharacterstics });
+                    that.allCharacterstics1 = that.allCharacterstics.filter(a => a.PRODUCT_ID === selectedProd);
+                    if(that.allCharacterstics1.length>0){
+                    that.oCharModel1.setData({ setChars: that.allCharacterstics1 });
                     table.setModel(that.oCharModel1);
                     table.removeSelections();
                     that.getOwnerComponent().getModel("BModel").read("/getLocProdChars", {
@@ -305,15 +307,39 @@ sap.ui.define([
                     });
 
                 }
+                else{
+                    sap.ui.core.BusyIndicator.hide();
+                    MessageToast.show("No characteristics for selected Location/Product");
+                }
+            }
                 else {
                     sap.ui.core.BusyIndicator.hide();
                     MessageToast.show("Please Select Location/Configurable Product");
                 }
+           
             },
             onTableItemsSelect: function (oEvent) {
-                sap.ui.core.BusyIndicator.show();
-                var selected = oEvent.getParameters().selected;
                 var oEntry = {};
+                sap.ui.core.BusyIndicator.show();
+                if(oEvent.getParameter("selectAll")){
+                    that.fullChars = that.allCharacterstics1;
+                    that.selectedChars=[];
+                    for(var i=0;i<that.allCharacterstics1.length;i++){
+                        oEntry = {
+                            LOCATION_ID: that.byId("PDFlocInput").getValue(),
+                            PRODUCT_ID: that.byId("PDFprodInput").getTokens()[0].getText(),
+                            CHAR_NUM: that.allCharacterstics1[i].CHAR_NUM,
+                            CHAR_DESC: that.allCharacterstics1[i].CHAR_DESC,
+                            CHARVAL_DESC: that.allCharacterstics1[i].CHARVAL_DESC,
+                            CHAR_VALUE: that.allCharacterstics1[i].CHAR_VALUE,
+                            CHARVAL_NUM: that.allCharacterstics1[i].CHARVAL_NUM
+                        }
+                        that.selectedChars.push(oEntry);
+                    }
+                    sap.ui.core.BusyIndicator.hide();
+                }
+                else{
+                var selected = oEvent.getParameters().selected;                
                 if (selected) {
                     oEntry = {
                         LOCATION_ID: that.byId("PDFlocInput").getValue(),
@@ -328,6 +354,11 @@ sap.ui.define([
                     sap.ui.core.BusyIndicator.hide();
                 }
                 else {
+                    var unSelectAll = oEvent.getParameters().listItems;
+                    if(unSelectAll.length === that.allCharacterstics1.length){
+                        that.selectedChars=[];
+                    }
+                    else{
                     var selectedId = oEvent.getParameters().listItem.getCells()[0].getText();
                     that.selectedChars = removeElementById(that.selectedChars, selectedId);
                     function removeElementById(array, idToRemove) {
@@ -335,8 +366,10 @@ sap.ui.define([
                             return obj.CHAR_NUM !== idToRemove;
                         });
                     }
+                }
                     sap.ui.core.BusyIndicator.hide();
                 }
+            }
             },
             onCharSavePress: function () {
                 sap.ui.core.BusyIndicator.show();
@@ -368,6 +401,7 @@ sap.ui.define([
                     var flag = "D"
                 }
                 var stringData = JSON.stringify(charArray);
+                // sap.ui.core.BusyIndicator.hide();
                 this.getOwnerComponent().getModel("BModel").callFunction("/getLOCPRODCHAR", {
                     method: "GET",
                     urlParameters: {
@@ -377,6 +411,7 @@ sap.ui.define([
                     success: function (oData) {
                         sap.ui.core.BusyIndicator.hide();
                         MessageToast.show(oData.getLOCPRODCHAR);
+                        that.selectedChars=[];
                         that.onSubmitPress();
                     },
                     error: function (error) {
