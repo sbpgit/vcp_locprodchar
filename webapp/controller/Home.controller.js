@@ -68,7 +68,7 @@ sap.ui.define([
                 //         Flag: "Z",
                 //         PRODATA: JSON.stringify([])
                 //     },
-                    this.getOwnerComponent().getModel("BModel").read("/getProdClsCharMaster", {
+                this.getOwnerComponent().getModel("BModel").read("/getProdClsCharMaster", {
                     success: function (oData) {
                         that.allCharacterstics = [];
                         for (let i = 0; i < oData.results.length; i++) {
@@ -170,7 +170,7 @@ sap.ui.define([
                             new Filter({
                                 filters: [
                                     new Filter("CHAR_NUM", FilterOperator.Contains, sQuery),
-                                    new Filter("CHAR_DESC", FilterOperator.Contains, sQuery) 
+                                    new Filter("CHAR_DESC", FilterOperator.Contains, sQuery)
                                 ],
                                 and: false,
                             })
@@ -246,66 +246,66 @@ sap.ui.define([
                     var selectedProd = that.byId("PDFprodInput").getTokens()[0].getText();
                     var selectedLoc = that.byId("PDFlocInput").getValue();
                     that.allCharacterstics1 = that.allCharacterstics.filter(a => a.PRODUCT_ID === selectedProd);
-                    if(that.allCharacterstics1.length>0){
-                    that.oCharModel1.setData({ setChars: that.allCharacterstics1 });
-                    table.setModel(that.oCharModel1);
-                    table.removeSelections();
-                    that.getOwnerComponent().getModel("BModel").read("/getLocProdChars", {
-                        filters: [
-                            new Filter(
-                                "LOCATION_ID",
-                                FilterOperator.EQ,
-                                selectedLoc
-                            ),
-                            new Filter(
-                                "PRODUCT_ID",
-                                FilterOperator.EQ,
-                                selectedProd
-                            )
-                        ],
-                        success: function (oData) {
-                            that.selectedChars = [];
-                            if (oData.results.length > 0) {
-                                that.selectedChars = oData.results;
-                                var tableItems = table.getItems();
-                                for (var k = 0; k < tableItems.length; k++) {
-                                    for (var s = 0; s < that.selectedChars.length; s++) {
-                                        if (that.selectedChars[s].CHAR_NUM === tableItems[k].getCells()[0].getText()
-                                            && that.selectedChars[s].CHAR_VALUE === tableItems[k].getCells()[1].getText()
-                                            && that.selectedChars[s].LOCATION_ID === selectedLoc
-                                            && that.selectedChars[s].PRODUCT_ID === selectedProd) {
-                                            tableItems[k].setSelected(true);
+                    if (that.allCharacterstics1.length > 0) {
+                        that.oCharModel1.setData({ setChars: that.allCharacterstics1 });
+                        table.setModel(that.oCharModel1);
+                        table.removeSelections();
+                        that.getOwnerComponent().getModel("BModel").read("/getLocProdChars", {
+                            filters: [
+                                new Filter(
+                                    "LOCATION_ID",
+                                    FilterOperator.EQ,
+                                    selectedLoc
+                                ),
+                                new Filter(
+                                    "PRODUCT_ID",
+                                    FilterOperator.EQ,
+                                    selectedProd
+                                )
+                            ],
+                            success: function (oData) {
+                                that.selectedChars = [];
+                                if (oData.results.length > 0) {
+                                    that.selectedChars = oData.results;
+                                    var tableItems = table.getItems();
+                                    for (var k = 0; k < tableItems.length; k++) {
+                                        for (var s = 0; s < that.selectedChars.length; s++) {
+                                            if (that.selectedChars[s].CHAR_NUM === tableItems[k].getCells()[0].getText()
+                                                && that.selectedChars[s].CHAR_VALUE === tableItems[k].getCells()[1].getText()
+                                                && that.selectedChars[s].LOCATION_ID === selectedLoc
+                                                && that.selectedChars[s].PRODUCT_ID === selectedProd) {
+                                                tableItems[k].setSelected(true);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            sap.ui.core.BusyIndicator.hide();
-                        },
-                        error: function (oData, error) {
-                            sap.ui.core.BusyIndicator.hide();
-                            MessageToast.show("error");
-                        },
-                    });
+                                sap.ui.core.BusyIndicator.hide();
+                            },
+                            error: function (oData, error) {
+                                sap.ui.core.BusyIndicator.hide();
+                                MessageToast.show("error");
+                            },
+                        });
 
+                    }
+                    else {
+                        sap.ui.core.BusyIndicator.hide();
+                        MessageToast.show("No characteristics for selected Location/Product");
+                    }
                 }
-                else{
-                    sap.ui.core.BusyIndicator.hide();
-                    MessageToast.show("No characteristics for selected Location/Product");
-                }
-            }
                 else {
                     sap.ui.core.BusyIndicator.hide();
                     MessageToast.show("Please Select Location/Configurable Product");
                 }
-           
+
             },
             onTableItemsSelect: function (oEvent) {
                 var oEntry = {};
                 sap.ui.core.BusyIndicator.show();
-                if(oEvent.getParameter("selectAll")){
+                if (oEvent.getParameter("selectAll")) {
                     that.fullChars = that.allCharacterstics1;
-                    that.selectedChars=[];
-                    for(var i=0;i<that.allCharacterstics1.length;i++){
+                    that.selectedChars = [];
+                    for (var i = 0; i < that.allCharacterstics1.length; i++) {
                         oEntry = {
                             LOCATION_ID: that.byId("PDFlocInput").getValue(),
                             PRODUCT_ID: that.byId("PDFprodInput").getTokens()[0].getText(),
@@ -319,38 +319,38 @@ sap.ui.define([
                     }
                     sap.ui.core.BusyIndicator.hide();
                 }
-                else{
-                var selected = oEvent.getParameters().selected;                
-                if (selected) {
-                    oEntry = {
-                        LOCATION_ID: that.byId("PDFlocInput").getValue(),
-                        PRODUCT_ID: that.byId("PDFprodInput").getTokens()[0].getText(),
-                        CHAR_NUM: oEvent.getParameters().listItem.getCells()[0].getText(),
-                        CHAR_DESC: oEvent.getParameters().listItem.getCells()[0].getTitle(),
-                        CHARVAL_DESC: oEvent.getParameters().listItem.getCells()[1].getTitle(),
-                        CHAR_VALUE: oEvent.getParameters().listItem.getCells()[1].getText(),
-                        CHARVAL_NUM: oEvent.getParameters().listItem.getCells()[2].getText()
-                    }
-                    that.selectedChars.push(oEntry);
-                    sap.ui.core.BusyIndicator.hide();
-                }
                 else {
-                    var unSelectAll = oEvent.getParameters().listItems;
-                    if(unSelectAll.length === that.allCharacterstics1.length){
-                        that.selectedChars=[];
+                    var selected = oEvent.getParameters().selected;
+                    if (selected) {
+                        oEntry = {
+                            LOCATION_ID: that.byId("PDFlocInput").getValue(),
+                            PRODUCT_ID: that.byId("PDFprodInput").getTokens()[0].getText(),
+                            CHAR_NUM: oEvent.getParameters().listItem.getCells()[0].getText(),
+                            CHAR_DESC: oEvent.getParameters().listItem.getCells()[0].getTitle(),
+                            CHARVAL_DESC: oEvent.getParameters().listItem.getCells()[1].getTitle(),
+                            CHAR_VALUE: oEvent.getParameters().listItem.getCells()[1].getText(),
+                            CHARVAL_NUM: oEvent.getParameters().listItem.getCells()[2].getText()
+                        }
+                        that.selectedChars.push(oEntry);
+                        sap.ui.core.BusyIndicator.hide();
                     }
-                    else{
-                    var selectedId = oEvent.getParameters().listItem.getCells()[0].getText();
-                    that.selectedChars = removeElementById(that.selectedChars, selectedId);
-                    function removeElementById(array, idToRemove) {
-                        return array.filter(function (obj) {
-                            return obj.CHAR_NUM !== idToRemove;
-                        });
+                    else {
+                        var unSelectAll = oEvent.getParameters().listItems;
+                        if (unSelectAll.length === that.allCharacterstics1.length) {
+                            that.selectedChars = [];
+                        }
+                        else {
+                            var selectedId = oEvent.getParameters().listItem.getCells()[0].getText();
+                            that.selectedChars = removeElementById(that.selectedChars, selectedId);
+                            function removeElementById(array, idToRemove) {
+                                return array.filter(function (obj) {
+                                    return obj.CHAR_NUM !== idToRemove;
+                                });
+                            }
+                        }
+                        sap.ui.core.BusyIndicator.hide();
                     }
                 }
-                    sap.ui.core.BusyIndicator.hide();
-                }
-            }
             },
             onCharSavePress: function () {
                 sap.ui.core.BusyIndicator.show();
@@ -391,7 +391,7 @@ sap.ui.define([
                     success: function (oData) {
                         sap.ui.core.BusyIndicator.hide();
                         MessageToast.show(oData.getLOCPRODCHAR);
-                        that.selectedChars=[];
+                        that.selectedChars = [];
                         that.onSubmitPress();
                     },
                     error: function (error) {
