@@ -81,20 +81,6 @@ sap.ui.define([
                         MessageToast.show("Failed to get profiles");
                     },
                 });
-
-                // this.getOwnerComponent().getModel("BModel").read("/getLocProdChars", {
-                //     success: function (oData) {
-                //         that.selectedChars = [];
-                //         if (oData.results.length > 0) {
-                //             that.selectedChars = oData.results;
-                //         }
-                //     },
-                //     error: function (oData, error) {
-                //         sap.ui.core.BusyIndicator.hide();
-                //         MessageToast.show("error");
-                //     },
-                // });
-
                 this.getOwnerComponent().getModel("BModel").read("/getLocation", {
                     success: function (oData) {
                         sap.ui.core.BusyIndicator.hide();
@@ -184,9 +170,7 @@ sap.ui.define([
                             new Filter({
                                 filters: [
                                     new Filter("CHAR_NUM", FilterOperator.Contains, sQuery),
-                                    new Filter("CHAR_DESC", FilterOperator.Contains, sQuery),
-                                    // new Filter("CHARVAL_NUM", FilterOperator.Contains, sQuery),
-                                    // new Filter("CHARVAL_DESC", FilterOperator.Contains, sQuery)
+                                    new Filter("CHAR_DESC", FilterOperator.Contains, sQuery) 
                                 ],
                                 and: false,
                             })
@@ -238,14 +222,11 @@ sap.ui.define([
                             })
                         );
                     });
-                    // that.byId("idBtnSubmit").setEnabled(true);
                 }
             },
             onCancelPress: function () {
                 that.oLoc.setValue();
                 that.oProd.removeAllTokens();
-                // that.oProd.setEnabled(false);
-                // that.byId("idBtnSubmit").setEnabled(false);
                 that.oCharModel1.setData({ setChars: [] });
                 that.byId("idChars").setModel(that.oCharModel1);
                 that.byId("headtabSearch").setValue();
@@ -401,7 +382,6 @@ sap.ui.define([
                     var flag = "D"
                 }
                 var stringData = JSON.stringify(charArray);
-                // sap.ui.core.BusyIndicator.hide();
                 this.getOwnerComponent().getModel("BModel").callFunction("/getLOCPRODCHAR", {
                     method: "GET",
                     urlParameters: {
