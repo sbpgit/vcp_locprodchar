@@ -68,7 +68,7 @@ sap.ui.define([
                 //         Flag: "Z",
                 //         PRODATA: JSON.stringify([])
                 //     },
-                this.getOwnerComponent().getModel("BModel").read("/getProdClsCharMaster", {
+                this.getOwnerComponent().getModel("BModel").read("/getProdClsChar", {
                     success: function (oData) {
                         that.allCharacterstics = [];
                         for (let i = 0; i < oData.results.length; i++) {
