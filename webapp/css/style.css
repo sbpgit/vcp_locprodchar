@@ -24,3 +24,8 @@
 .locClass{
     margin-left:1rem !important;
 }
+
+.sapUiTinyMarginBottom {
+    margin-top:0.5rem;
+    font-size:13px !important;
+  }

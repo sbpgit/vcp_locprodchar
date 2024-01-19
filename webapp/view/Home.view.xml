@@ -13,6 +13,7 @@
                 <ux:expandedHeading>
                     <HBox>
                         <Title text="{i18n>title}" class="boldText" titleAlignment="Center" wrapping="true"/>
+                        <Title id="profTitle1" text="(Automated Seed Order Generation)" class="sapUiTinyMarginBottom"></Title>
                     </HBox>
                 </ux:expandedHeading>
                 <ux:snappedHeading>
@@ -34,7 +35,7 @@
                  <SearchField id="headtabSearch" liveChange="handleSearch1" placeholder="Characteristic Name" width="300px"/>     
                 </VBox>
                     <VBox class="locClass">
-                        <Label text="Location" required="true" width="250px"/>
+                        <Label text="Demand Location" required="true" width="250px"/>
                         <Input id="PDFlocInput" width="250px" placeholder="Location" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="handleValueHelp" />
                     </VBox>
                     <VBox class="VBoxWidth">
