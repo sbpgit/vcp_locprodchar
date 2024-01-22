@@ -26,6 +26,6 @@
 }
 
 .sapUiTinyMarginBottom {
-    margin-top:0.35rem;
+    margin-top:0.5rem !important;
     font-size:13px !important;
   }
