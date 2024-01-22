@@ -61,7 +61,7 @@
                 <ux:subSections>
                     <ux:ObjectPageSubSection>
                         <ux:blocks>
-                    <Table id="idChars" items="{path: '/setChars'}" sticky="ColumnHeaders" growingThreshold="100" growingScrollToLoad="true" growing="true" mode="MultiSelect" selectionChange="onTableItemsSelect" >
+                    <Table id="idChars" items="{path: '/setChars'}" sticky="ColumnHeaders" growingThreshold="1000" growingScrollToLoad="true" growing="true" mode="MultiSelect" selectionChange="onTableItemsSelect" >
                     <columns>
                     <Column id="_IDGenColumn11" hAlign="Center" vAlign="Middle">
                         <Text id="_IDGenText11" text="Characteristic Name" />

@@ -386,7 +386,7 @@ sap.ui.define([
                     method: "GET",
                     urlParameters: {
                         FLAG: flag,
-                        LOCPRODCHAR: stringData
+                        LOCPRODCHAR:stringData
                     },
                     success: function (oData) {
                         sap.ui.core.BusyIndicator.hide();
