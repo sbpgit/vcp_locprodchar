@@ -224,6 +224,9 @@ sap.ui.define([
                     });
                 }
             },
+            /**
+             * On Press of cancel
+             */
             onCancelPress: function () {
                 that.oLoc.setValue();
                 that.oProd.removeAllTokens();
@@ -245,7 +248,7 @@ sap.ui.define([
                     that.byId("idCharSaveBtn").setEnabled(true);
                     var selectedProd = that.byId("PDFprodInput").getTokens()[0].getText();
                     var selectedLoc = that.byId("PDFlocInput").getValue();
-                    that.allCharacterstics1 = that.allCharacterstics.filter(a => a.PRODUCT_ID === selectedProd);
+                    that.allCharacterstics1 =that.allCharacterstics.filter(a => a.PRODUCT_ID === selectedProd);
                     if (that.allCharacterstics1.length > 0) {
                         that.oCharModel1.setData({ setChars: that.allCharacterstics1 });
                         table.setModel(that.oCharModel1);
