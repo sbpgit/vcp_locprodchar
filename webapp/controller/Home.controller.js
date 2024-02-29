@@ -331,8 +331,8 @@ sap.ui.define([
                             PRODUCT_ID: that.byId("PDFprodInput").getTokens()[0].getText(),
                             CHAR_NUM: oEvent.getParameters().listItem.getCells()[0].getText(),
                             CHAR_DESC: oEvent.getParameters().listItem.getCells()[0].getTitle(),
-                            CHARVAL_DESC: oEvent.getParameters().listItem.getCells()[1].getTitle(),
-                            CHAR_VALUE: oEvent.getParameters().listItem.getCells()[1].getText(),
+                            CHARVAL_DESC: oEvent.getParameters().listItem.getCells()[1].getText(),
+                            CHAR_VALUE: oEvent.getParameters().listItem.getCells()[1].getTitle(),
                             CHARVAL_NUM: oEvent.getParameters().listItem.getCells()[2].getText()
                         }
                         that.selectedChars.push(oEntry);
