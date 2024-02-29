@@ -29,3 +29,19 @@
     margin-top:0.35rem !important;
     font-size:13px !important;
   }
+
+  .sapUiSizeCompact .sapUxAPObjectPageSectionHeader, .sapUxAPObjectPageSectionHeader {
+    height: 0rem !important;
+    line-height: 2.25rem;
+}
+
+.sapUxAPObjectPageSection .sapUxAPObjectPageSectionContainer .sapUxAPObjectPageSubSection .sapUxAPBlockContainer {
+    padding-bottom: 0;
+    padding-top: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    background: #fff;
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
+    border-radius: 0.75rem;
+}

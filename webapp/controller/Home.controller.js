@@ -274,7 +274,8 @@ sap.ui.define([
                                     for (var k = 0; k < tableItems.length; k++) {
                                         for (var s = 0; s < that.selectedChars.length; s++) {
                                             if (that.selectedChars[s].CHAR_NUM === tableItems[k].getCells()[0].getText()
-                                                && that.selectedChars[s].CHAR_VALUE === tableItems[k].getCells()[1].getText()
+                                                && that.selectedChars[s].CHAR_VALUE === tableItems[k].getCells()[1].getTitle()
+                                                && that.selectedChars[s].CHARVAL_DESC === tableItems[k].getCells()[1].getText()
                                                 && that.selectedChars[s].LOCATION_ID === selectedLoc
                                                 && that.selectedChars[s].PRODUCT_ID === selectedProd) {
                                                 tableItems[k].setSelected(true);
@@ -343,11 +344,13 @@ sap.ui.define([
                             that.selectedChars = [];
                         }
                         else {
-                            var selectedId = oEvent.getParameters().listItem.getCells()[0].getText();
-                            that.selectedChars = removeElementById(that.selectedChars, selectedId);
-                            function removeElementById(array, idToRemove) {
+                            var selectedId = oEvent.getParameters().listItem.getCells()[1].getTitle();
+                            var selectedCharDesc = oEvent.getParameters().listItem.getCells()[1].getText();
+                            that.selectedChars = removeElementById(that.selectedChars, selectedId,selectedCharDesc);
+                            function removeElementById(array, idToRemove, charToRemove) {
                                 return array.filter(function (obj) {
-                                    return obj.CHAR_NUM !== idToRemove;
+                                    return obj.CHAR_VALUE !== idToRemove 
+                                    || obj.CHARVAL_DESC !== charToRemove;
                                 });
                             }
                         }
@@ -371,7 +374,7 @@ sap.ui.define([
                         charItems.CHAR_DESC = that.selectedChars[i].CHAR_DESC;
                         charItems.CHAR_VALUE = that.selectedChars[i].CHAR_VALUE;
                         charItems.CHARVAL_DESC = that.selectedChars[i].CHARVAL_DESC;
-                        charItems.CHARVAL_NUM = that.selectedChars[i].CHARVAL_NUM;
+                        charItems.CHARVAL_NUM = that.selectedChars[i].CHAR_VALUE;
                         charArray.push(charItems);
                         charItems = {};
                     }
