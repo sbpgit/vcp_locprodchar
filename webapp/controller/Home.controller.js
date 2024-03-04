@@ -250,6 +250,7 @@ sap.ui.define([
                     var selectedLoc = that.byId("PDFlocInput").getValue();
                     that.allCharacterstics1 =that.allCharacterstics.filter(a => a.PRODUCT_ID === selectedProd);
                     if (that.allCharacterstics1.length > 0) {
+                        that.allCharacterstics1=that.removeDuplicate(that.allCharacterstics1, 'CHAR_VALUE');
                         that.oCharModel1.setData({ setChars: that.allCharacterstics1 });
                         table.setModel(that.oCharModel1);
                         table.removeSelections();
@@ -359,7 +360,7 @@ sap.ui.define([
                 }
             },
             onCharSavePress: function () {
-                sap.ui.core.BusyIndicator.show();
+                // sap.ui.core.BusyIndicator.show();
                 that.byId("headtabSearch").setValue();
                 that.byId("idChars").getBinding("items").filter([]);
                 var charItems = {}, charArray = [];
