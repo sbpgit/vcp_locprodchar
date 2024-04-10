@@ -58,10 +58,8 @@ sap.ui.define([
                 this.oLocList = this._oCore.byId(
                     this._valueHelpDialogLoc.getId() + "-list"
                 );
-
                 that.oLoc = this.byId("PDFlocInput");
                 that.oProd = this.byId("PDFprodInput");
-
                 // this.getOwnerComponent().getModel("BModel").callFunction("/getProductCharVal", {
                 //     method: "GET",
                 //     urlParameters: {
@@ -114,7 +112,6 @@ sap.ui.define([
                         MessageToast.show("Select Location");
                     }
                 }
-
             },
             handleSearch: function (oEvent) {
                 var sQuery =
@@ -291,12 +288,11 @@ sap.ui.define([
                                 MessageToast.show("error");
                             },
                         });
-
                     }
                     else {
                         sap.ui.core.BusyIndicator.hide();
                         MessageToast.show("No characteristics for selected Location/Product");
-                    }
+                    }                                      
                 }
                 else {
                     sap.ui.core.BusyIndicator.hide();
@@ -380,7 +376,6 @@ sap.ui.define([
                         charItems = {};
                     }
                     var flag = "X";
-
                 }
                 else {
                     charItems.LOCATION_ID = selectedLocation;
@@ -426,3 +421,9 @@ sap.ui.define([
             }
         });
     });
+
+
+
+
+
+

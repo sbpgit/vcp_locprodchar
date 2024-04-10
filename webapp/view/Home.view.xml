@@ -6,7 +6,7 @@
     xmlns:html="http://www.w3.org/1999/xhtml" 
     xmlns:u = "sap.ui.unified">
     <Page id="_IDGenPage1" showHeader="false" showFooter="true" enableScrolling="false">
-        <content>
+     <content>
    <ux:ObjectPageLayout id="ObjectPageLayout" headerContentPinned="true">
         <ux:headerTitle>
             <ux:ObjectPageDynamicHeaderTitle>
