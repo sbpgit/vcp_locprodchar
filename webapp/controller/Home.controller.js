@@ -154,6 +154,7 @@ sap.ui.define([
                     that.oProductList.getBinding("items").filter(oFilters);
                 }
             },
+            
             handleSearch1: function (oEvent) {
                 var sQuery =
                     oEvent.getParameter("value") || oEvent.getParameter("newValue"),
@@ -232,6 +233,7 @@ sap.ui.define([
                 that.byId("headtabSearch").setValue();
                 that.byId("idCharSaveBtn").setEnabled(false);
             },
+            //on press of submit
             onSubmitPress: function () {
                 sap.ui.core.BusyIndicator.show();
                 var table = that.byId("idChars");
@@ -298,7 +300,6 @@ sap.ui.define([
                     sap.ui.core.BusyIndicator.hide();
                     MessageToast.show("Please Select Location/Configurable Product");
                 }
-
             },
             onTableItemsSelect: function (oEvent) {
                 var oEntry = {};
@@ -421,9 +422,6 @@ sap.ui.define([
             }
         });
     });
-
-
-
 
 
 
